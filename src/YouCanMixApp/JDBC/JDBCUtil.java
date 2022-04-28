@@ -8,17 +8,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 //import java.sql.*;
 
-public class JDBCUtil
+public class JDBCUtil // does any of this code work??
 {
     public static Connection getConnection() throws SQLException, ClassNotFoundException
     {
         // Construct the connection URL
-        String dbURL = "jdbc:mysql://localhost:3306/youcanmix";
-        String userId = "Mixer";
-        String password = "Mixer1";
+//        String dbURL = "jdbc:mysql://localhost:3306/YouCanMixAdmin";
+        String dbURL = "jdbc:mysql://localhost:3306/mysql";
+        String userId = "YouCanMixAdmin";
+        String password = "YouCanMix2";
 
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Class.forName("java.sql.Driver");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (Exception balls) {
+            System.out.println(balls.getMessage());
+        }
+//        Class.forName("com.microsoft.sqlserver.jdbc");
         
         // get a connection
         Connection conn = DriverManager.getConnection(dbURL, userId, password);
