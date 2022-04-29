@@ -31,7 +31,7 @@ public class JDBCUtil // does any of this code work??
         Connection conn = DriverManager.getConnection(dbURL, userId, password);
         	
         // Set the auto-commit off
-        conn.setAutoCommit(false);
+        conn.setAutoCommit(true);
         	
         return conn;
 
