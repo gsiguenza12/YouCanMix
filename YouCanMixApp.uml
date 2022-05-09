@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>YouCanMixApp</OriginalElement>
+  <nodes>
+    <node x="17.0" y="-517.0">YouCanMixApp.DrinkGUI</node>
+    <node x="282.0" y="-499.0">YouCanMixApp.SQL.CreateSQLTables</node>
+    <node x="654.0" y="-334.0">YouCanMixApp.Drink</node>
+    <node x="26.5" y="-639.0">YouCanMixApp.Main</node>
+    <node x="319.0" y="-343.0">YouCanMixApp.DrinkManagerDAO</node>
+    <node x="645.0" y="-554.0">YouCanMixApp.JDBC.JDBCUtil</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="YouCanMixApp.DrinkGUI" target="YouCanMixApp.Drink" relationship="TO_ONE">
+      <point x="83.0" y="-120.0" />
+      <point x="560.0" y="-400.0" />
+      <point x="560.0" y="-280.0" />
+      <point x="-106.0" y="-40.0" />
+    </edge>
+    <edge source="YouCanMixApp.DrinkManagerDAO" target="YouCanMixApp.JDBC.JDBCUtil" relationship="DEPENDENCY">
+      <point x="101.0" y="-60.0" />
+      <point x="580.0" y="-320.0" />
+      <point x="580.0" y="-460.0" />
+      <point x="-115.0" y="-0.0" />
+    </edge>
+    <edge source="YouCanMixApp.DrinkGUI" target="YouCanMixApp.DrinkManagerDAO" relationship="TO_ONE">
+      <point x="83.0" y="-120.0" />
+      <point x="220.0" y="-400.0" />
+      <point x="220.0" y="-300.0" />
+      <point x="-101.0" y="-40.0" />
+    </edge>
+    <edge source="YouCanMixApp.DrinkManagerDAO" target="YouCanMixApp.Drink" relationship="TO_ONE">
+      <point x="101.0" y="20.0" />
+      <point x="560.0" y="-240.0" />
+      <point x="560.0" y="-280.0" />
+      <point x="-106.0" y="-40.0" />
+    </edge>
+    <edge source="YouCanMixApp.SQL.CreateSQLTables" target="YouCanMixApp.JDBC.JDBCUtil" relationship="DEPENDENCY">
+      <point x="138.0" y="-0.0" />
+      <point x="-115.0" y="-0.0" />
+    </edge>
+    <edge source="YouCanMixApp.DrinkManagerDAO" target="YouCanMixApp.Drink" relationship="CREATE">
+      <point x="101.0" y="60.0" />
+      <point x="-106.0" y="40.0" />
+    </edge>
+    <edge source="YouCanMixApp.DrinkGUI" target="YouCanMixApp.Drink" relationship="CREATE">
+      <point x="83.0" y="120.0" />
+      <point x="540.0" y="-160.0" />
+      <point x="540.0" y="-200.0" />
+      <point x="-106.0" y="40.0" />
+    </edge>
+    <edge source="YouCanMixApp.DrinkGUI" target="YouCanMixApp.DrinkManagerDAO" relationship="CREATE">
+      <point x="83.0" y="120.0" />
+      <point x="220.0" y="-160.0" />
+      <point x="220.0" y="-220.0" />
+      <point x="-101.0" y="40.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.6753246753246753" showDependencies="true" x="446.0" y="-341.0" />
+  <SelectedNodes>
+    <node>YouCanMixApp.DrinkManagerDAO</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -14,8 +14,10 @@ import java.awt.event.*;
 //import java.sql.*;
 
 
-
-public class DrinkGUI extends JFrame{
+/**
+ * concrete mediator class
+ */
+public class DrinkGUI extends JFrame implements Mediator{
 	
 	private int num_Drinks = 100;
 	private int currentSize = 0;
@@ -979,6 +981,20 @@ public class DrinkGUI extends JFrame{
 		JFrame rAFrame = new JFrame();
         JOptionPane.showMessageDialog(rAFrame, "Rating Succesfully Added to Database!", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
 	}
-	
-	
+
+
+	@Override
+	public void createGUI() {
+
+	}
+
+	@Override
+	public void hideElements(boolean flag) {
+
+	}
+
+	@Override
+	public void clear() {
+
+	}
 }
