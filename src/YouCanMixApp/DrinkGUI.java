@@ -17,8 +17,8 @@ import java.awt.event.*;
 /**
  * concrete mediator class
  */
-public class DrinkGUI extends JFrame implements Mediator{
-	
+//public class DrinkGUI extends JFrame implements Mediator{
+public class DrinkGUI extends JFrame{
 	private int num_Drinks = 100;
 	private int currentSize = 0;
 	
@@ -983,7 +983,7 @@ public class DrinkGUI extends JFrame implements Mediator{
 	}
 
 
-	@Override
+	/*@Override
 	public void createGUI() {
 
 	}
@@ -996,5 +996,5 @@ public class DrinkGUI extends JFrame implements Mediator{
 	@Override
 	public void clear() {
 
-	}
+	}*/
 }
