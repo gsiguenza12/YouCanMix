@@ -3,6 +3,9 @@ package YouCanMixApp;
 import YouCanMixApp.SQL.CreateSQLTables;
 import javax.swing.*;
 
+/**
+ * @author Gabriel Alfredo Siguenza <sigue005@cougars.csusm.edu>
+ */
 public class Main{
 	//starts the program
 	public static void main(String[] args)throws ClassNotFoundException{
