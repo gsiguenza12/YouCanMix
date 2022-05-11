@@ -27,7 +27,7 @@ public class DrinkManagerDAO
         	//SETS UP AND CONNECTS TO THE DATBASE
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = JDBCUtil.getConnection();
-            
+
             //MAKES ENTRY PROMPT
             String SQL = "insert into drinks values (?,?,?,?);";
             PreparedStatement stmt = conn.prepareStatement(SQL);

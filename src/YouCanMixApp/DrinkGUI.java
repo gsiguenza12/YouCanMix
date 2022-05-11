@@ -269,8 +269,8 @@ public class DrinkGUI extends JFrame implements Mediator{
 	        	FullQuantity += tQuantity.getText();
 		        try {
 		        	//MAKES NEW DRINK AND PUTS IT INTO CURRENT DRINK
-					currentDrink = new Drink(textCocktailName.getText(), FullIngredient, 
-							FullQuantity, 5 );
+					currentDrink = new Drink.DrinkBuilder(textCocktailName.getText(), FullIngredient,
+							FullQuantity, 5 ).build();
 					
 					//CONNECTS TO THE DATABASE AND INSERTS NEW DRINK INTO IT
 					//RETURNS IF IT WAS ADDED OR NOT
