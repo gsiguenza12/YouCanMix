@@ -312,7 +312,7 @@ public class DrinkGUI extends JFrame implements Mediator{
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(10, 10, 10, 10);
         
-        JLabel age = new JLabel("Are You 21 Year's of Age or Older?");
+        JLabel age = new JLabel("Are You 21 Years of Age or Older?");
         
         constraints.gridx = 0;
         constraints.gridy = 0;  
