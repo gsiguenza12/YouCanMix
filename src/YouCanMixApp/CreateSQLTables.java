@@ -1,6 +1,6 @@
-package YouCanMixApp.SQL;
+package YouCanMixApp;
 
-import YouCanMixApp.JDBC.JDBCUtil;
+import YouCanMixApp.JDBCUtil;
 
 import java.sql.*;
 

@@ -1,6 +1,5 @@
 package YouCanMixApp;
 
-import YouCanMixApp.SQL.CreateSQLTables;
 import javax.swing.*;
 
 public class Main{

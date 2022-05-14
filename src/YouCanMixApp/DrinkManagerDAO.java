@@ -2,8 +2,6 @@ package YouCanMixApp;
 
 //import JDBC.JDBCUtil;
 
-import YouCanMixApp.JDBC.JDBCUtil;
-
 import java.sql.*;
 
 public class DrinkManagerDAO
