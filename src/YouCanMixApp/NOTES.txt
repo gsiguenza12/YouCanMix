@@ -1,0 +1,17 @@
+For presentation:
+    Order:
+    1. Pitch
+    2. Patterns slide
+    3. Progress Update
+    4. Demo
+    5. Lessons Learned
+
+    Can talk about SOLID principles to enforce your pattern choices
+
+
+Book: Extreme Programming
+
+Final for SE461:
+    Everything post midterm, not cumulative
+    Junit example, write a Junit test case - not concerned about syntax
+    3 questions
