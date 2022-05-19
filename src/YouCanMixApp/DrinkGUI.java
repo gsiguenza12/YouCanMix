@@ -22,7 +22,7 @@ public class DrinkGUI extends JFrame {
 	private int num_Drinks = 100;
 	private int currentSize = 0;
 	
-	private DrinkManagerDAO manager = new DrinkManagerDAO(); //DATABASE OBJECT ACCESSOR	
+	private DrinkDAOProxy managerProxy = new DrinkDAOProxy(); //DATABASE OBJECT ACCESSOR	
 	private Drink currentDrink; //HOLDS THE CURRENT DRINK WE ARE WORKING WITH
 	private Drink[] currentDrinks = new Drink[num_Drinks]; //HOLDS THE CURRENT DRINKS WE ARE WORKING WITH
 	
@@ -92,14 +92,6 @@ public class DrinkGUI extends JFrame {
 		super("YouCanMix");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setIconImage(icon);
-
-//		super.getContentPane().setLayout(new BorderLayout());
-//		ImageIcon imageIcon = new ImageIcon(icon);
-//		super.getContentPane().add(new JLabel(imageIcon), BorderLayout.WEST);
-
-
-
 
 
 		/*********** GUI ACTION LISTENERS **********/
@@ -162,7 +154,7 @@ public class DrinkGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				try {
-			    	currentDrinks = manager.getDrinks("SELECT * FROM Drinks");
+			    	currentDrinks = managerProxy.getDrinks("SELECT * FROM Drinks");
 			    	//System.out.println("TESTER: " + currentDrinks[0].getDrinkName());
 					
 				} catch (ClassNotFoundException e) {
@@ -218,7 +210,7 @@ public class DrinkGUI extends JFrame {
 				
 				Parameter = findTextField.getText();
 				try {
-					currentDrinks = manager.getDrinks("SELECT * FROM Drinks WHERE Ingredients LIKE \"%" +
+					currentDrinks = managerProxy.getDrinks("SELECT * FROM Drinks WHERE Ingredients LIKE \"%" +
 							Parameter +"%\" or Drink_Name LIKE \"%" + Parameter +"%\"");
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
@@ -254,7 +246,7 @@ public class DrinkGUI extends JFrame {
 				rateDrinkFrame.removeAll();
 				rateDrinkFrame.setVisible(false);
 				x++;
-				if (x <= manager.getCurrentSize()) {
+				if (x <= managerProxy.getCurrentSize()) {
 					ratingSelection();
 					rateDrinks();
 				}
@@ -308,7 +300,7 @@ public class DrinkGUI extends JFrame {
 					
 					//CONNECTS TO THE DATABASE AND INSERTS NEW DRINK INTO IT
 					//RETURNS IF IT WAS ADDED OR NOT
-					success = manager.insertDrink(currentDrink);
+					success = managerProxy.insertDrink(currentDrink);
 					
 				} catch (ClassNotFoundException e) {//CATCHES ERROR
 					e.printStackTrace();
@@ -771,7 +763,7 @@ public class DrinkGUI extends JFrame {
         	@Override
         	public void actionPerformed(ActionEvent event) {
         		try {
-					success = manager.insertRate(currentDrinks[x-1], 1);
+					success = managerProxy.insertRate(currentDrinks[x-1], 1);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -793,7 +785,7 @@ public class DrinkGUI extends JFrame {
         	@Override
         	public void actionPerformed(ActionEvent event) {
         		try {
-        			success = manager.insertRate(currentDrinks[x-1], 2);
+        			success = managerProxy.insertRate(currentDrinks[x-1], 2);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -815,7 +807,7 @@ public class DrinkGUI extends JFrame {
         	@Override
         	public void actionPerformed(ActionEvent event) {
         		try {
-        			success = manager.insertRate(currentDrinks[x-1], 3);
+        			success = managerProxy.insertRate(currentDrinks[x-1], 3);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -837,7 +829,7 @@ public class DrinkGUI extends JFrame {
         	@Override
         	public void actionPerformed(ActionEvent event) {
         		try {
-        			success = manager.insertRate(currentDrinks[x-1], 4);
+        			success = managerProxy.insertRate(currentDrinks[x-1], 4);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -859,7 +851,7 @@ public class DrinkGUI extends JFrame {
         	@Override
         	public void actionPerformed(ActionEvent event) {
         		try {
-        			success = manager.insertRate(currentDrinks[x-1], 5);
+        			success = managerProxy.insertRate(currentDrinks[x-1], 5);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}  
@@ -883,7 +875,7 @@ public class DrinkGUI extends JFrame {
 	public void fillTable() {
 		
     	int num = 0;
-    	currentSize = manager.getCurrentSize();//NUM OF DRINKS BEING PUT INTO TABLE 
+    	currentSize = managerProxy.getCurrentSize();//NUM OF DRINKS BEING PUT INTO TABLE 
     	while(num < currentSize ) {// WHILE THERE ARE DRINKS IN THE ARRAY
 		 defaultTableModel.addRow(new Object[]{currentDrinks[num].getDrinkName(), 
 				 currentDrinks[num].getIngredients()});

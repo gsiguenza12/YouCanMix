@@ -4,7 +4,7 @@ package YouCanMixApp;
 
 import java.sql.*;
 
-public class DrinkManagerDAO
+public class DrinkManagerDAO implements DrinkDAO
 {
 	private int currentSize = 0;//NUM OF DRINKS CURRENTLY WORKING WITH
 	private int num_Drinks = 100;//MAX NUM OF DRINKS

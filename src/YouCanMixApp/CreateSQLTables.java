@@ -18,8 +18,8 @@ public class CreateSQLTables {
             String drinkTableName = "Drinks";
             //String ingredientsTableName = "Ingredients";
 
-            // an SQL query in the form of a string
-            String SQL = "create table " + drinkTableName + " ( " +
+            //TODO: Add columns for additional drink values
+            String SQL = "create table " + drinkTableName + " ( " + // an SQL query in the form of a string
                     "Drink_Name varchar(30) not null, " +
                     "Ingredients varchar(100) not null, " +
                     "Quantity varchar(100) not null," +
