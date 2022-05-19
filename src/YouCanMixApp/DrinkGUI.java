@@ -17,6 +17,8 @@ import java.awt.event.*;
 /**
  * concrete mediator class
  */
+
+//TODO: Implement mediator, test advanced DB functions, use context to allow decorated drinks
 //public class DrinkGUI extends JFrame implements Mediator{
 public class DrinkGUI extends JFrame {
 	private int num_Drinks = 100;
@@ -65,6 +67,7 @@ public class DrinkGUI extends JFrame {
 
     
     //CREATE BUTTONS
+	//TODO: Break out View Drinks button into component class using mediator. Should not be allowed if no database set.
     private	JButton Yes = new JButton("Yes");
     private	JButton No = new JButton("No");
  	private	JButton Menu = new JButton("Main Menu");
@@ -406,6 +409,7 @@ public class DrinkGUI extends JFrame {
 
 	}
 
+	//TODO: change rating to display the rating integer, figure out why pictures don't work.
 	//INTERFACE THAT DISPLAYS CURRENT DRINK
 	public void viewDrink(int s) {
 
@@ -913,7 +917,7 @@ public class DrinkGUI extends JFrame {
 	}
 	
 
-	
+	//TODO: FIX Rating
 	//CREATES A PANEL THAT HOLD THE DRINK rate
 	public void ratingGUI(int s) {
 		

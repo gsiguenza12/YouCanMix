@@ -23,6 +23,11 @@ public class DecoratedDrink_Level2 extends AbstractDrinkWrapper{
     }
 
     //CONSTRUCTOR
+
+    /**
+     * @param decoratee the Drink object to be decorated
+     * @param alcoholContent a double for extended functionality of alchohol content, Decorator Wrapper
+     */
     public DecoratedDrink_Level2(Drink decoratee, double alcoholContent) {
         // safe extraction of decoratable object drink instance vars
         String drinkName = decoratee.getDrinkName();

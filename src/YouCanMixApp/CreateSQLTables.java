@@ -4,6 +4,7 @@ import YouCanMixApp.JDBCUtil;
 
 import java.sql.*;
 
+//TODO: Create tables with the proper number of columns. (implement Drink Decorators)
 public class CreateSQLTables {
 
     public CreateSQLTables() throws ClassNotFoundException {

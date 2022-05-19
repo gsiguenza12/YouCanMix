@@ -4,6 +4,7 @@ package YouCanMixApp;
 
 import java.sql.*;
 
+//TODO: implement strategy and use context to insert Drinks of different levels, fill unused slots with null or make empty
 public class DrinkManagerDAO implements DrinkDAO
 {
 	private int currentSize = 0;//NUM OF DRINKS CURRENTLY WORKING WITH
@@ -16,7 +17,8 @@ public class DrinkManagerDAO implements DrinkDAO
 
 	//DEFAULT CONSTRUCTOR
 	public DrinkManagerDAO() {};
-	
+
+    //TODO: Use serialization to store objects into database, need to update fields and columns for new instance variables in decorated drinks.
     //CONNECTS AND INSERTS DRINK INTO THE DATABASE
     public boolean insertDrink(Drink currentDrink) throws ClassNotFoundException
     { 
@@ -30,6 +32,7 @@ public class DrinkManagerDAO implements DrinkDAO
             String SQL = "insert into drinks values (?,?,?,?);";
             PreparedStatement stmt = conn.prepareStatement(SQL);
 
+            //TODO: Change to serialize objects
             //ENTERS DATA INTO PROPER COLUMN
             stmt.setString(1, currentDrink.getDrinkName());
             stmt.setString(2, currentDrink.getIngredients());
@@ -88,7 +91,8 @@ public class DrinkManagerDAO implements DrinkDAO
         
 		return false;//RATING WASN'T ADDED TO DATABASE
     }
-    
+
+    //TODO: Change to deserialize objects
     //GETS DRINKS FROM THE DATABASE
     public Drink[] getDrinks(String ES)throws ClassNotFoundException{
     	currentSize = 0;
