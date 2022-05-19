@@ -1,12 +1,15 @@
 package YouCanMixApp;
 
+/**
+ * concrete wrapper class that extends the behavior of the methods inherited from the AbstractWrapper class in whatever way that is needed.
+ */
 public class DecoratedDrink_Level2 extends AbstractDrinkWrapper{
     private String drinkName;
     private String ingredients;
     private String quantities;
     private int rating;
-    private boolean containsAlchohol;
-    private double alchoholContent;
+    private boolean containsAlcohol;
+    private double alcoholContent;
 
 
     //DEFAULT CONSTRUCTOR
@@ -16,17 +19,25 @@ public class DecoratedDrink_Level2 extends AbstractDrinkWrapper{
         this.ingredients = "";
         this.quantities = "";
         this.rating = 0;
-        this.alchoholContent = 0;
+        this.alcoholContent = 0;
     }
 
     //CONSTRUCTOR
-    public DecoratedDrink_Level2(String theme, String drinkName, String ingredients, String quantities, int rate) {
+    public DecoratedDrink_Level2(Drink decoratee, double alcoholContent) {
+        // safe extraction of decoratable object drink instance vars
+        String drinkName = decoratee.getDrinkName();
+        String ingredients = decoratee.getIngredients();
+        String quantities = decoratee.getQuantities();
+        int rating = decoratee.getRating();
+        
         if (drinkName != null && ingredients != null && quantities != null)
         {
+            this.alcoholContent = alcoholContent;
             this.drinkName = drinkName;
             this.ingredients = ingredients;
             this.quantities = quantities;
-            this.rating = rate;
+            this.rating = rating;
+            this.containsAlcohol = true;
         }
 
     }
@@ -47,24 +58,21 @@ public class DecoratedDrink_Level2 extends AbstractDrinkWrapper{
         this.rating = r;
     }
 
-    public boolean isContainsAlchohol() {
-        return containsAlchohol;
+    public boolean containsalcohol() {
+        return containsAlcohol;
     }
 
-    public void setContainsAlchohol(boolean containsAlchohol) {
-        this.containsAlchohol = containsAlchohol;
+    public void setContainsalcohol(boolean containsalcohol) {
+        this.containsAlcohol = containsalcohol;
     }
 
-    public double getAlchoholContent() {
-        return alchoholContent;
+    public double getalcoholContent() {
+        return alcoholContent;
     }
 
-    public void setAlchoholContent(int alchoholContent) {
-        if(containsAlchohol) {
-            this.alchoholContent = alchoholContent;
-        }
-        else{
-            this.alchoholContent = 0;
+    public void setalcoholContent(double alcoholContent) {
+        if(containsAlcohol) {
+            this.alcoholContent = alcoholContent;
         }
     }
 }

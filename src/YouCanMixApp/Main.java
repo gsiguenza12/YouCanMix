@@ -4,16 +4,23 @@ import javax.swing.*;
 
 public class Main{
 	//starts the program
-	public static void main(String[] args)throws ClassNotFoundException{
-		
+	public static void main(String[] args)throws ClassNotFoundException {
+
+
+		System.out.println("creating sql tables in main");
+		CreateSQLTables drinkTable = new CreateSQLTables();
+
+
+//		Context context = new Context();
+
 		SwingUtilities.invokeLater(new Runnable(){
 			@Override
 			public void run() {
 			      	new DrinkGUI().setVisible(true);
 			}
 		});
-		//Creates drinks table in MySQL DB
-		CreateSQLTables drinkTable = new CreateSQLTables();
+
+
 
 		/**
 		 * Demo class. Everything comes together here.

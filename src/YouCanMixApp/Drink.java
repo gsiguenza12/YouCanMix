@@ -1,6 +1,9 @@
 package YouCanMixApp;
 
-public class Drink extends AbstractDrinkWrapper{
+/**
+ * Concrete Wrapper class, provides the basic functionality that is extended by the Decorator Pattern.
+ */
+class Drink extends AbstractDrinkWrapper{
     private String drinkName;
     private String ingredients;
     private String quantities;

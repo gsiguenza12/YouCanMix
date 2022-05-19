@@ -1,29 +1,26 @@
 package YouCanMixApp;
 
+/**
+ * The abstract drink wrapper class. Enforces the contract to implement common drink methods, but declared abstract to allow objects to be expanded upon.
+ * Since we have only two decorated objects this could be removed and it's responsibilities merged with the concrete Drink class, however we decided
+ * to keep this structure as we would like to allow extension in the future.
+ */
 public abstract class AbstractDrinkWrapper implements AbstractDrinkIF{
 
-    @Override
-    public String getDrinkName() {
-        return null;
-    }
+    private AbstractDrinkIF wrappee; // not used
 
     @Override
-    public String getIngredients() {
-        return null;
-    }
+    public abstract String getDrinkName();
 
     @Override
-    public String getQuantities() {
-        return null;
-    }
+    public abstract String getIngredients();
 
     @Override
-    public int getRating() {
-        return 0;
-    }
+    public abstract String getQuantities();
 
     @Override
-    public void setRating(int r) {
+    public abstract int getRating();
 
-    }
+    @Override
+    public abstract void setRating(int r);
 }

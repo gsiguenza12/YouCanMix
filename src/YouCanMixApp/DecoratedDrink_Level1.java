@@ -1,5 +1,8 @@
 package YouCanMixApp;
 
+/**
+ * concrete wrapper class that extends the behavior of the methods inherited from the AbstractWrapper class in whatever way that is needed.
+ */
 public class DecoratedDrink_Level1 extends AbstractDrinkWrapper {
     private String drinkName;
     private String ingredients;
@@ -18,14 +21,20 @@ public class DecoratedDrink_Level1 extends AbstractDrinkWrapper {
     }
 
     //CONSTRUCTOR
-    public DecoratedDrink_Level1(String theme, String drinkName, String ingredients, String quantities, int rate) {
+    public DecoratedDrink_Level1(Drink decoratee, String theme) {
+        // safe extraction of decoratable object drink instance vars
+        String drinkName = decoratee.getDrinkName();
+        String ingredients = decoratee.getIngredients();
+        String quantities = decoratee.getQuantities();
+        int rating = decoratee.getRating();
+
         if (drinkName != null && ingredients != null && quantities != null)
         {
             this.theme = theme;
             this.drinkName = drinkName;
             this.ingredients = ingredients;
             this.quantities = quantities;
-            this.rating = rate;
+            this.rating = rating;
         }
 
     }

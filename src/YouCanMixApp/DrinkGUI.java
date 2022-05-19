@@ -18,7 +18,7 @@ import java.awt.event.*;
  * concrete mediator class
  */
 //public class DrinkGUI extends JFrame implements Mediator{
-public class DrinkGUI extends JFrame{
+public class DrinkGUI extends JFrame {
 	private int num_Drinks = 100;
 	private int currentSize = 0;
 	
@@ -31,7 +31,8 @@ public class DrinkGUI extends JFrame{
 	private JFrame displayDrinkFrame = new JFrame(); //CURRENT DRINK FRAME 
 	private JFrame searchDrinkFrame = new JFrame(); //SEARCH DRINK FRAME
 	private JFrame rateDrinkFrame = new JFrame(); //RATE DRINK FRAME
-	
+
+	protected Context context = new Context();
 	protected JPanel RatingPanel; //ACTIVE RATING PANEL
 	protected JPanel rate; //RATE PANEL
 	protected JPanel search; //SEARCH PANEL
@@ -89,24 +90,45 @@ public class DrinkGUI extends JFrame{
 	public DrinkGUI() {
 		// displays YouCanMix title on every window
 		super("YouCanMix");
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		setIconImage(icon);
-		
-		//Sets actions for each button
+//		setIconImage(icon);
+
+//		super.getContentPane().setLayout(new BorderLayout());
+//		ImageIcon imageIcon = new ImageIcon(icon);
+//		super.getContentPane().add(new JLabel(imageIcon), BorderLayout.WEST);
+
+
+
+
+
+		/*********** GUI ACTION LISTENERS **********/
 		Yes.addActionListener(new ActionListener() {//	WHEN YES BUTTON IS PRESSED
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				BuildTable();
 				mainMenu();
 			}
-		}); 
+		});
+		//TODO: implement strategy here
 		No.addActionListener(new ActionListener() {//	WHEN NO BUTTON IS PRESSED
-			@Override
+			/*@Override
 			public void actionPerformed(ActionEvent ae) {
 				System.exit(0);
+			}*/
+			@Override
+			public void actionPerformed(ActionEvent ae)
+			{
+				System.out.println("User is under 21 setting strategy..."); // Debugging print to terminal
+				context.setSelectedStrategy(new StrategyIsUnder21());
+
+				// Display message to user
+				notVerified();
+
+				context.executeStrategy();
 			}
 		});
+
 		Menu.addActionListener(new ActionListener() {//	WHEN MENU BUTTON IS PRESSED
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -119,7 +141,8 @@ public class DrinkGUI extends JFrame{
 				deleteAllRows();
 				mainMenu();
 			}
-		}); 
+		});
+
 		Exit.addActionListener(new ActionListener() {//	WHEN EXIT BUTTON IS PRESSED
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -213,8 +236,10 @@ public class DrinkGUI extends JFrame{
 				}
 				
 			}
-		}); 
-		Rate.addActionListener(new ActionListener() {//	WHEN RATE DRINKS BUTTON IS PRESSED
+		});
+
+		//	WHEN RATE DRINKS BUTTON IS PRESSED
+		Rate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				sr = true;
@@ -242,12 +267,19 @@ public class DrinkGUI extends JFrame{
 		}); 
 		
 		//CREATE DRINKS FUNCTION CALLS
+		/**
+		 * When the "Create" button is clicked, Gui calls createDrinks method.
+		 */
 		Create.addActionListener(new ActionListener() {//	WHEN CREATE DRINKS BUTTON IS PRESSED
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				createDrinks();
 			}
-		}); 
+		});
+
+		/**
+		 * when "more ingredients button is pressed, allows user to add up to 9 more ingredients.
+		 */
 		moreIngredients.addActionListener(new ActionListener() {//WHEN MORE INGREDIENTS BUTTON IS PRESSED
 	        @Override
 	        public void actionPerformed(ActionEvent event) {
@@ -260,6 +292,8 @@ public class DrinkGUI extends JFrame{
 	    		else Error();
 	        }
 	    });
+
+
 		Enter.addActionListener(new ActionListener() {//WHEN ENTER BUTTON IS PRESSED
 	        @Override
 	        public void actionPerformed(ActionEvent event) {
@@ -302,6 +336,166 @@ public class DrinkGUI extends JFrame{
 		Verify();
 		
 	}
+
+	/*********** GUI INTERFACES **********/
+	//interface for user to create a drink
+	public void createDrinks() {
+
+		getContentPane().removeAll();//clears frame
+
+		//Create Drinks
+		JPanel creating = new JPanel(new GridBagLayout());//panel to prompt user entry
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(10, 10, 10, 10);
+
+		//Display prompt for cocktail name
+		JLabel cocktailName = new JLabel("Cocktail Name:");
+
+		//Display prompt for ingredients
+		JLabel ingredient = new JLabel("Enter Ingredient " + x + ": ");
+		JLabel quantity = new JLabel("Enter Ingredient " + x + "\'s Quantity: ");
+
+		//initial components to the panel
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		creating.add(cocktailName, constraints); //LABEL FOR NAME OF DRINK
+
+		constraints.gridx = 1;
+		creating.add(textCocktailName, constraints); //TEXT BOX FOR NAME OF DRINK
+
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		creating.add(ingredient, constraints); //LABEL FOR INGREDIENT X
+
+		constraints.gridx = 1;
+		creating.add(tIngredient, constraints);//TEXT BOX FOR INGREDIENT X
+
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		creating.add(quantity, constraints); //LABEL FOR QUANTITIY X
+
+		constraints.gridx = 1;
+		creating.add(tQuantity, constraints); //TEXT BOX FOR QUANTITIY X
+
+		constraints.gridx = 2;
+		creating.add(moreIngredients, constraints); //BUTTON TO ADD MORE INGREDIENTS
+
+		//PUTS THE ENTER BUTTON IN THE MIDDLE OF THE PANEL
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		constraints.gridwidth = 2;
+		constraints.anchor = GridBagConstraints.CENTER;
+		creating.add(Enter, constraints);
+
+		//ADDS MENU AND EXIT BUTTON TO THE BOTTOM OF THE PANEL
+		constraints.gridx = 0;
+		constraints.gridy = 4;
+		constraints.gridwidth = 4;
+		constraints.anchor = GridBagConstraints.WEST;
+		creating.add(Menu, constraints);
+
+		constraints.gridx = 0;
+		constraints.gridy = 4;
+		constraints.gridwidth = 4;
+		constraints.anchor = GridBagConstraints.EAST;
+		creating.add(Exit, constraints);
+
+		// set border for the panel
+		creating.setBorder(BorderFactory.createTitledBorder(
+				BorderFactory.createEtchedBorder(), "Create a Drink"));
+
+		// add the panel to this frame
+		add(creating);
+
+		//SETS THE LOCATION OF THE FRAME
+		pack();
+		setLocationRelativeTo(null);
+
+	}
+
+	//INTERFACE THAT DISPLAYS CURRENT DRINK
+	public void viewDrink(int s) {
+
+		getContentPane().removeAll();//clears frame
+
+		displayDrinkFrame = new JFrame();//NEW FRAME TO DISPLAY CURRENT DRINK
+		displayDrinkFrame.setLayout(new FlowLayout());
+		displayDrinkFrame.setIconImage(icon);
+		displayDrinkFrame.setTitle("Drink Recipe");
+
+
+		JPanel displayCocktail = new JPanel(new GridBagLayout());//panel to display list of drinks
+
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(10, 2, 10, 2);
+
+		//ADDS INGREDIENTS AND QUANTITIES TO RESPECTIVE LISTS
+		currentIngredient = currentDrinks[s].getIngredients().split(",");
+		currentQuantity = currentDrinks[s].getQuantities().split(",");
+
+		//LABEL THAT DISPLAYS THE CURRENT COCKTAIL NAME
+		JLabel cocktailName = new JLabel("Cocktail Name: " + currentDrinks[s].getDrinkName());
+
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		displayCocktail.add(cocktailName, constraints); //ADDS LABEL TO PANEL
+
+		while( x <= currentIngredient.length ) {//WHILE THERE ARE STILL INGREDIENTS TO DISPLAY
+
+			//Display ingredients and quantities
+			JLabel ingredient = new JLabel("Ingredient " + x + ": " + currentIngredient[x-1]);
+			JLabel quantity = new JLabel("Quantity: " + currentQuantity[x-1]);
+
+			constraints.gridx = 0;
+			constraints.gridy = x;
+			displayCocktail.add(ingredient, constraints); //ADDS LABEL FOR INGREDIENT X
+
+			constraints.gridx = 1;
+			constraints.gridy = x;
+			displayCocktail.add(quantity, constraints); //ADDS LABEL FOR QUANTITIY X
+
+			x++;
+		}
+
+		ratingGUI(s);//GETS THE RATING OF THE DRINK
+
+
+		constraints.gridx = 0;
+		constraints.gridy = x;
+		constraints.gridwidth = 10;
+		displayCocktail.add(rate, constraints);
+
+
+		//add menu and exit button to panel
+		constraints.gridx = 0;
+		constraints.gridy = x + 1;
+		constraints.gridwidth = 4;
+		constraints.anchor = GridBagConstraints.WEST;
+		displayCocktail.add(Back, constraints);
+
+		constraints.gridx = 0;
+		constraints.gridy = x + 1 ;
+		constraints.gridwidth = 4;
+		constraints.anchor = GridBagConstraints.EAST;
+		displayCocktail.add(Exit, constraints);
+
+
+		displayDrinkFrame.setSize(600, (x*85));//SETS THE SIZE OF THE FRAME
+
+		// add the panel to this frame
+		displayDrinkFrame.add(displayCocktail);
+
+		//SETS LOCATION AND VISIBILITY OF FRAME
+		displayDrinkFrame.pack();
+		displayDrinkFrame.setLocationRelativeTo(null);
+		displayDrinkFrame.setVisible(true);
+		displayDrinkFrame.validate();
+
+
+	}
+
 
 	//INTERFACE TO VERIFY USERS AGE
 	public void Verify() {
@@ -698,82 +892,9 @@ public class DrinkGUI extends JFrame{
 		if(currentSize == 0)noDrinkError();//NO DRINKS MATCHED SEARCH	
 	}
 
-	//interface for user to create a drink
-	public void createDrinks() { 
-		
-		getContentPane().removeAll();//clears frame
 
-		//Create Drinks		
-		JPanel creating = new JPanel(new GridBagLayout());//panel to prompt user entry		
-		GridBagConstraints constraints = new GridBagConstraints();
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.insets = new Insets(10, 10, 10, 10);
-		
-		//Display prompt for cocktail name
-		JLabel cocktailName = new JLabel("Cocktail Name:");
 
-		//Display prompt for ingredients
-	    JLabel ingredient = new JLabel("Enter Ingredient " + x + ": ");
-	    JLabel quantity = new JLabel("Enter Ingredient " + x + "\'s Quantity: ");
-	    
-	    //initial components to the panel
-        constraints.gridx = 0;
-        constraints.gridy = 0;     
-        creating.add(cocktailName, constraints); //LABEL FOR NAME OF DRINK
- 
-        constraints.gridx = 1;
-        creating.add(textCocktailName, constraints); //TEXT BOX FOR NAME OF DRINK
-         
-        constraints.gridx = 0;
-        constraints.gridy = 1;     
-        creating.add(ingredient, constraints); //LABEL FOR INGREDIENT X
-         
-        constraints.gridx = 1;
-        creating.add(tIngredient, constraints);//TEXT BOX FOR INGREDIENT X
-        
-        constraints.gridx = 0;
-        constraints.gridy = 2;     
-        creating.add(quantity, constraints); //LABEL FOR QUANTITIY X
-        
-        constraints.gridx = 1;
-        creating.add(tQuantity, constraints); //TEXT BOX FOR QUANTITIY X
-        
-        constraints.gridx = 2;
-        creating.add(moreIngredients, constraints); //BUTTON TO ADD MORE INGREDIENTS
-        
-        //PUTS THE ENTER BUTTON IN THE MIDDLE OF THE PANEL
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        constraints.gridwidth = 2;
-        constraints.anchor = GridBagConstraints.CENTER;
-        creating.add(Enter, constraints);
-        
-        //ADDS MENU AND EXIT BUTTON TO THE BOTTOM OF THE PANEL
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        constraints.gridwidth = 4;
-        constraints.anchor = GridBagConstraints.WEST;
-        creating.add(Menu, constraints);
-        
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        constraints.gridwidth = 4;
-        constraints.anchor = GridBagConstraints.EAST;
-        creating.add(Exit, constraints);
-         
-        // set border for the panel
-        creating.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Create a Drink"));
-         
-        // add the panel to this frame
-        add(creating);
-        
-        //SETS THE LOCATION OF THE FRAME
-        pack();
-        setLocationRelativeTo(null);
-	 
-	}
-	
+	/*********** GUI PANELS **********/
 	//CREATES A PANEL THAT HOLDS THE SEARCH BAR
 	public void searchBar() {
 		
@@ -799,87 +920,7 @@ public class DrinkGUI extends JFrame{
 	 
 	}
 	
-	//INTERFACE THAT DISPLAYS CURRENT DRINK
-	public void viewDrink(int s) {
-		
-		getContentPane().removeAll();//clears frame
-		
-		displayDrinkFrame = new JFrame();//NEW FRAME TO DISPLAY CURRENT DRINK
-		displayDrinkFrame.setLayout(new FlowLayout());
-		displayDrinkFrame.setIconImage(icon);
-		displayDrinkFrame.setTitle("Drink Recipe");
 
-		
-		JPanel displayCocktail = new JPanel(new GridBagLayout());//panel to display list of drinks
-		
-		GridBagConstraints constraints = new GridBagConstraints();
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.insets = new Insets(10, 2, 10, 2);       
-        
-        //ADDS INGREDIENTS AND QUANTITIES TO RESPECTIVE LISTS 
-        currentIngredient = currentDrinks[s].getIngredients().split(",");
-        currentQuantity = currentDrinks[s].getQuantities().split(",");    
-
-        //LABEL THAT DISPLAYS THE CURRENT COCKTAIL NAME
-        JLabel cocktailName = new JLabel("Cocktail Name: " + currentDrinks[s].getDrinkName());
-        
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        displayCocktail.add(cocktailName, constraints); //ADDS LABEL TO PANEL
-        
-        while( x <= currentIngredient.length ) {//WHILE THERE ARE STILL INGREDIENTS TO DISPLAY
-        	
-        	//Display ingredients and quantities
-        	JLabel ingredient = new JLabel("Ingredient " + x + ": " + currentIngredient[x-1]);
-        	JLabel quantity = new JLabel("Quantity: " + currentQuantity[x-1]);        	
-
-        	constraints.gridx = 0;
-            constraints.gridy = x;
-            displayCocktail.add(ingredient, constraints); //ADDS LABEL FOR INGREDIENT X
-                 
-            constraints.gridx = 1;
-            constraints.gridy = x;
-            displayCocktail.add(quantity, constraints); //ADDS LABEL FOR QUANTITIY X
-            
-      	    x++;
-        }
-        
-        ratingGUI(s);//GETS THE RATING OF THE DRINK 
-        
-        
-        constraints.gridx = 0;
-        constraints.gridy = x;
-        constraints.gridwidth = 10;
-        displayCocktail.add(rate, constraints);
-
-        
-        //add menu and exit button to panel
-        constraints.gridx = 0;
-        constraints.gridy = x + 1;
-        constraints.gridwidth = 4;
-        constraints.anchor = GridBagConstraints.WEST;
-        displayCocktail.add(Back, constraints);
-        
-        constraints.gridx = 0;
-        constraints.gridy = x + 1 ;
-        constraints.gridwidth = 4;
-        constraints.anchor = GridBagConstraints.EAST;
-        displayCocktail.add(Exit, constraints);
-      			
-        
-        displayDrinkFrame.setSize(600, (x*85));//SETS THE SIZE OF THE FRAME
-                
-        // add the panel to this frame
-        displayDrinkFrame.add(displayCocktail);
-        
-        //SETS LOCATION AND VISIBILITY OF FRAME
-        displayDrinkFrame.pack();
-        displayDrinkFrame.setLocationRelativeTo(null);
-        displayDrinkFrame.setVisible(true);
-        displayDrinkFrame.validate();
-      		
-		
-	}
 	
 	//CREATES A PANEL THAT HOLD THE DRINK rate
 	public void ratingGUI(int s) {
@@ -912,6 +953,7 @@ public class DrinkGUI extends JFrame{
 		
 	}
 
+	/**************** SQL DB FUNCTIONS ****************/
 	//MAKE AN JTABLE THAT HAS A COLUMN FOR DRINK NAME AND INGREDIENTS
 	public void BuildTable() {
 		
@@ -944,6 +986,9 @@ public class DrinkGUI extends JFrame{
 		Parameter = "*";
 		x = 1;
 	}
+
+	/*********** ERROR/SUCCESS/MISC POP-UP MESSAGES **********/
+	// The following methods are for displaying pop up windows
 
 	//ERROR MESSAGE WHEN USER TRIES TO ADD TOO MANY INGREDIENTS
 	public void Error() {
@@ -982,6 +1027,11 @@ public class DrinkGUI extends JFrame{
         JOptionPane.showMessageDialog(rAFrame, "Rating Succesfully Added to Database!", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
 	}
 
+	//Displays before running alternative program for underage user
+	public void notVerified() {
+		JFrame nVFrame = new JFrame();
+		JOptionPane.showMessageDialog(nVFrame, "You are too young to use this app. DO NOT RERUN and select yes or we will tell you parents.\n Please enjoy this game instead.", "Sorry", JOptionPane.PLAIN_MESSAGE);
+	}
 
 	/*@Override
 	public void createGUI() {

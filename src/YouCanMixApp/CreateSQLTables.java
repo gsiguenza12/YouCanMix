@@ -10,38 +10,39 @@ public class CreateSQLTables {
 
         Connection conn = null;
         try {
-        	
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = JDBCUtil.getConnection();
 
             // create sql string
-            String drinkTableName = "Drinks"; 
+            String drinkTableName = "Drinks";
             //String ingredientsTableName = "Ingredients";
-            
+
+            // an SQL query in the form of a string
             String SQL = "create table " + drinkTableName + " ( " +
-            		"Drink_Name varchar(30) not null, " +
-            		"Ingredients varchar(100) not null, " +
-            		"Quantity varchar(100) not null," +
-            		"Rating integer not null, " +
+                    "Drink_Name varchar(30) not null, " +
+                    "Ingredients varchar(100) not null, " +
+                    "Quantity varchar(100) not null," +
+                    "Rating integer not null, " +
                     "primary key(Drink_Name))";
             
             /*String SQLIngredientsTable = "create table " + ingredientsTableName + " ( " +
             		"drink_name varchar(30) not null, " +
                     "ingredients varchar(30) not null, " +
             		"quantity varchar(30) not null";*/
-            
+
             boolean drinksTableExists = tableExistsSQL(conn, drinkTableName);
             //boolean ingredientsTableExists = tableExistsSQL(conn, ingredientsTableName);
 
+            // the sql query statement
             Statement stmt = null;
-                        
-            if (!drinksTableExists){
+
+            if (!drinksTableExists) {
                 try {
                     stmt = conn.createStatement();
                     stmt.executeUpdate(SQL);
                     //stmt.executeUpdate(SQLIngredientsTable);
-                } 
-                finally {
+                } finally {
                     JDBCUtil.closeStatement(stmt);
                 }
                 //Commit the transaction
@@ -50,23 +51,20 @@ public class CreateSQLTables {
                 System.out.println("Drinks table created");
                 //System.out.println("Ingredients table created");
 
-            }
-            else{
+            } else {
                 System.out.println("Drinks table already created");
                 //System.out.println("Ingredients table already created");
-
             }
-
-        	}//end try
-        	catch (SQLException e) {
-        		e.printStackTrace();
-        	} 
-        	finally {
-        		JDBCUtil.closeConnection(conn);
-        	}
+        }//end try
+        catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtil.closeConnection(conn);
+        }
     }
 
-    static boolean tableExistsSQL (Connection connection, String tableName) throws SQLException {
+    // executes SQL statement that checks if the table itself exists
+    static boolean tableExistsSQL(Connection connection, String tableName) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT count(*) "
                 + "FROM information_schema.tables "
                 + "WHERE table_name = ?"
