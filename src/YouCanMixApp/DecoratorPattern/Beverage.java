@@ -5,7 +5,7 @@
  * Software Engineering 471 Software Architecture
  * Professor Simon Fan
  */
-package DecoratorPattern;
+package YouCanMixApp.DecoratorPattern;
 
 public abstract class Beverage {
     String name = "Unknown Beverage";

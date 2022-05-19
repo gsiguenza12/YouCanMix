@@ -5,7 +5,7 @@
  * Software Engineering 471 Software Architecture
  * Professor Simon Fan
  */
-package DecoratorPattern;
+package YouCanMixApp.DecoratorPattern;
 
 public class bevMain {
     public static void main(String[] args) {

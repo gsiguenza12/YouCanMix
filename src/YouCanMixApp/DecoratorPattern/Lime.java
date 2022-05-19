@@ -5,7 +5,7 @@
  * Software Engineering 471 Software Architecture
  * Professor Simon Fan
  */
-package DecoratorPattern;
+package YouCanMixApp.DecoratorPattern;
 
 public class Lime extends beverageDecorator {
     private String type;
